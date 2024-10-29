@@ -1,23 +1,25 @@
 {
-  "name": "bear-react-jackpot",
-  "version": "0.0.2-alpha.0",
-  "description": "Most modern jackpot with hardware accelerated transitions for ReactJS",
+  "name": "@acrool/react-jackpot",
+  "version": "0.0.1",
+  "description": "Jackpot list with React Component",
   "keywords": [
     "react",
-    "typescript"
+    "typescript",
+    "jackpot"
   ],
   "private": false,
   "type": "module",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/imagine10255/bear-react-jackpot.git"
+    "url": "https://github.com/acrool/acrool-react-jackpot.git"
   },
-  "module": "./dist/bear-react-jackpot.es.js",
+  "module": "./dist/acrool-react-jackpot.es.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/bear-react-jackpot.es.js"
+      "browser": "./dist/acrool-react-jackpot.es.js",
+      "import": "./dist/acrool-react-jackpot.es.js"
     },
     "./dist/index.css": "./dist/style.css"
   },
@@ -28,7 +30,7 @@
     "node": ">=14"
   },
   "scripts": {
-    "dev": "vite build -w",
+    "dev": "NODE_ENV=dev vite build -w",
     "build:claer": "rm -rf ./dist",
     "prepublishOnly": "run-s build",
     "build": "run-s build:claer && tsc && vite build",
@@ -43,10 +45,13 @@
     "release:patch": "standard-version -r patch",
     "release:alpha": "standard-version --prerelease alpha"
   },
-  "dependencies": {
-    "@react-spring/web": "^9.7.2",
+  "peerDependencies": {
     "react": "^18.x",
     "react-dom": "^18.x"
+  },
+  "dependencies": {
+    "clsx": "2.1.1",
+    "@react-spring/web": "^9.7.2"
   },
   "devDependencies": {
     "@types/jest": "^29.5.0",
@@ -54,7 +59,6 @@
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react-swc": "^3.0.0",
-    "classnames": "^2.3.2",
     "cz-git": "^1.6.1",
     "eslint": "^8.37.0",
     "eslint-config-react-app": "^7.0.1",
@@ -63,11 +67,13 @@
     "rollup-plugin-visualizer": "^5.9.0",
     "standard-version": "^9.5.0",
     "ts-jest": "^29.1.0",
-    "typescript": "^4.9.3",
-    "ulid": "^2.3.0",
-    "vite": "^4.2.0",
+    "typescript": "^5.0.3",
+    "react": "^18.x",
+    "react-dom": "^18.x",
+    "vite": "^4.3.9",
     "vite-plugin-dts": "^2.1.0",
-    "vite-plugin-eslint": "^1.8.1"
+    "vite-plugin-eslint": "^1.8.1",
+    "sass": "^1.77.1"
   },
   "config": {
     "commitizen": {

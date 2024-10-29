@@ -1,4 +1,4 @@
-import {defineConfig} from 'vite';
+import {defineConfig, loadEnv} from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import dts from 'vite-plugin-dts';
 import * as path from 'node:path';
@@ -15,12 +15,20 @@ export default defineConfig({
         }),
         visualizer() as Plugin,
     ],
+    css: {
+        modules: {
+            localsConvention: 'camelCase',
+            scopeBehaviour: 'local',
+            generateScopedName: 'acrool-react-jackpot__[local]',
+        }
+    },
     build: {
+        minify: process.env.NODE_ENV === 'production',
         sourcemap: process.env.NODE_ENV !== 'production',
         lib: {
             entry: path.resolve(__dirname, 'src/index.ts'),
             formats: ['es'],
-            fileName: (format) => `bear-react-jackpot.${format}.js`,
+            fileName: (format) => `acrool-react-jackpot.${format}.js`,
         },
         cssTarget: 'chrome61',
         rollupOptions: {

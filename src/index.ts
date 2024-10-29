@@ -1,3 +1,3 @@
-export {default} from './BearJackpot';
-export {default as elClassName} from './el-class-name';
+export {default as Jackpot} from './Jackpot';
+
 export * from './types';
