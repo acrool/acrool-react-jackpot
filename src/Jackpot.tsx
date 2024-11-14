@@ -1,6 +1,6 @@
 import CSS from 'csstype';
 import styles from './jackpot.module.scss';
-import {useEffect, useState} from 'react';
+import {ReactNode, useEffect, useState} from 'react';
 import {animated, config, useSprings} from '@react-spring/web';
 import {clsx} from 'clsx';
 
@@ -11,6 +11,7 @@ interface IProps {
     style?: CSS.Properties
     amount?: number;
     length?: number;
+    renderNumber?: (currentNumber: number) => ReactNode
 }
 
 
@@ -20,6 +21,7 @@ const pi = 100 / numberTotal;
 const Jackpot = ({
     amount = 0,
     length = 5,
+    renderNumber,
 }: IProps) => {
     const defaultValue = Array(length).fill('0');
 
@@ -76,7 +78,7 @@ const Jackpot = ({
                                 className={clsx(styles.num)}
                                 data-active={isActive ? '': undefined}
                             >
-                                {num}
+                                {renderNumber ? renderNumber(num) : num}
                             </div>
                         );
                     })}
