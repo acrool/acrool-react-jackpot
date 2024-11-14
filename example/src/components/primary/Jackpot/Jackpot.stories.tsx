@@ -5,6 +5,7 @@ import {Jackpot} from '@acrool/react-jackpot';
 import {useEffect} from 'react';
 import {Flex} from '@acrool/react-grid';
 import {getRandom} from './utils';
+import Text from './Text';
 
 
 const meta = {
@@ -43,8 +44,8 @@ const meta = {
 
         }, []);
 
-        return <Flex column>
-            curr: {amount}
+        return <Flex column style={{fontSize: 26}}>
+            curr: {args.amount}
             <Jackpot {...args}/>
         </Flex>;
 
@@ -58,5 +59,11 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
     args: {},
+};
+export const RenderNum: Story = {
+    args: {
+        amount: 1234567890,
+        renderNum: (value: number) => <Text>{value}</Text>,
+    },
 };
 
