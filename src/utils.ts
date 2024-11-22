@@ -28,3 +28,14 @@ export const getRadiusValue = (value: TSizeValue) => {
     }
     return String(value);
 };
+
+
+/**
+ * 千分位格式化
+ * @param val 原數值
+ */
+export const formatCurrency = (val: number|string): string => {
+    const parts = val.toString().split('.');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return parts.join('.');
+};

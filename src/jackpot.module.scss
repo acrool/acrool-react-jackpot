@@ -13,9 +13,9 @@
     --jackpot-num-total: 20;
 
     display: flex;
-    justify-content: space-around;
     height: var(--default-jackpot-line-height);
     overflow: hidden;
+    gap: var(--jackpot-gap, 0);
 }
 
 .motion{
