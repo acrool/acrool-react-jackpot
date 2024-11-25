@@ -1,5 +1,5 @@
 import CSS from 'csstype';
-import styles from './jackpot.module.scss';
+import styles from './with-react-spring.module.scss';
 import {ReactNode, useEffect, useState} from 'react';
 import {animated, config, useSprings} from '@react-spring/web';
 import {clsx} from 'clsx';
@@ -18,7 +18,7 @@ interface IProps {
 const numberTotal = 20;
 const pi = 100 / numberTotal;
 
-const JackpotSpring = ({
+const WithReactSpring = ({
     amount = 0,
     length = 5,
     renderNumber,
@@ -88,4 +88,4 @@ const JackpotSpring = ({
     );
 };
 
-export default JackpotSpring;
+export default WithReactSpring;

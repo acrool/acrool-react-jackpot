@@ -2,14 +2,14 @@ import type {Meta, StoryObj} from '@storybook/react';
 
 import {useArgs} from '@storybook/preview-api';
 import {Jackpot} from '@acrool/react-jackpot';
+import WithReactSpring from '../../atoms/WithReactSpring/WithReactSpring';
 import {useEffect} from 'react';
 import {Flex} from '@acrool/react-grid';
 import {getRandom} from '../../../utils';
-import Text from './Text';
 
 
 const meta = {
-    title: 'Primary/Jackpot',
+    title: 'Atoms/With React Spring',
     component: Jackpot,
     parameters: {
         layout: 'centered',
@@ -27,10 +27,10 @@ const meta = {
     },
     render: function Render(args) {
 
-        const [{amount}, updateArgs] = useArgs<{amount: number}>();
+        const [{amount}, updateArgs] = useArgs<{ amount: number }>();
 
         // 因為無法像 useState 取得
-        const onChange = (newValue: number) => updateArgs({amount: args.amount + 1234});
+        const onChange = (newValue: number) => updateArgs({amount: args.amount + newValue});
 
 
         useEffect(() => {
@@ -46,9 +46,8 @@ const meta = {
 
         return <Flex column style={{fontSize: '26px'}}>
             <div style={{position: 'fixed', top: '10px', left: '10px'}}>Amount: {args.amount}</div>
-            <Jackpot {...args}/>
+            <WithReactSpring {...args}/>
         </Flex>;
-
     }
 } satisfies Meta<typeof Jackpot>;
 
@@ -59,9 +58,4 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
     args: {},
-};
-export const WithReactNodeNumber: Story = {
-    args: {
-        renderNumber: (currentNumber: number|string) => <Text>{currentNumber}</Text>,
-    },
 };

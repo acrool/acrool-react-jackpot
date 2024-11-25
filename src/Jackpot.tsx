@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react';
 import {clsx} from 'clsx';
 import CSS from 'csstype';
 import styles from './jackpot.module.scss';
-import Numbers from './_components/Numbers';
+import Numbers from './components/Numbers';
 import {formatCurrency, getCompareNumber} from './utils';
 
 interface IProps {
