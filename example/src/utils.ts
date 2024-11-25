@@ -11,3 +11,10 @@ export function asset(path?: string): string{
 }
 
 
+/**
+ * 取亂數
+ * @param x
+ */
+export const getRandom = (x: number): number => {
+    return Math.floor(Math.random()*x)+1;
+};

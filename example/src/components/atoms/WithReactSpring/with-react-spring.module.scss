@@ -1,0 +1,40 @@
+.root,
+.root *,
+.root *::before,
+.root *::after{
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    line-height: normal;
+    user-select: none;
+}
+
+.root {
+    --default-jackpot-line-height: var(--jackpot-line-height, 40px);
+    --jackpot-num-total: 20;
+
+    display: flex;
+    height: var(--default-jackpot-line-height);
+    overflow: hidden;
+    gap: var(--jackpot-gap, 0);
+}
+
+.motion{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: calc(var(--default-jackpot-line-height) * var(--jackpot-num-total));
+}
+
+.num {
+    height: var(--default-jackpot-line-height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    [data-active]{
+        color: red;
+    }
+}
+
