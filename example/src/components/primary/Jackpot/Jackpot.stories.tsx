@@ -1,7 +1,7 @@
 import type {Meta, StoryObj} from '@storybook/react';
 
 import {useArgs} from '@storybook/preview-api';
-import {Jackpot} from '@acrool/react-jackpot';
+import {Jackpot, JackpotSpring} from '@acrool/react-jackpot';
 import {useEffect} from 'react';
 import {Flex} from '@acrool/react-grid';
 import {getRandom} from './utils';
@@ -30,7 +30,7 @@ const meta = {
         const [{amount}, updateArgs] = useArgs<{amount: number}>();
 
         // 因為無法像 useState 取得
-        const onChange = (newValue: number) => updateArgs({amount: args.amount + newValue});
+        const onChange = (newValue: number) => updateArgs({amount: args.amount + 1234});
 
 
         useEffect(() => {
@@ -42,10 +42,10 @@ const meta = {
                 clearInterval(timeRef);
             };
 
-        }, []);
+        }, [amount]);
 
         return <Flex column style={{fontSize: '26px'}}>
-            curr: {args.amount}
+            <div style={{position: 'fixed', top: '10px', left: '10px'}}>Amount: {args.amount}</div>
             <Jackpot {...args}/>
         </Flex>;
 
@@ -62,8 +62,32 @@ export const Primary: Story = {
 };
 export const RenderNumber: Story = {
     args: {
-        amount: 1234567890,
-        renderNumber: (currentNumber: number) => <Text>{currentNumber}</Text>,
+        renderNumber: (currentNumber: number|string) => <Text>{currentNumber}</Text>,
     },
 };
+export const WithReactSpring: Story = {
+    render: function Render(args) {
 
+        const [{amount}, updateArgs] = useArgs<{ amount: number }>();
+
+        // 因為無法像 useState 取得
+        const onChange = (newValue: number) => updateArgs({amount: args.amount + newValue});
+
+
+        useEffect(() => {
+            const timeRef = setInterval(() => {
+                onChange(getRandom(1000));
+            }, 3000);
+
+            return () => {
+                clearInterval(timeRef);
+            };
+
+        }, [amount]);
+
+        return <Flex column style={{fontSize: '26px'}}>
+            <div style={{position: 'fixed', top: '10px', left: '10px'}}>Amount: {args.amount}</div>
+            <JackpotSpring {...args}/>
+        </Flex>;
+    }
+};
