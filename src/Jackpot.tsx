@@ -1,87 +1,68 @@
+import {useState, useEffect} from 'react';
+import {clsx} from 'clsx';
 import CSS from 'csstype';
 import styles from './jackpot.module.scss';
-import {useEffect, useState} from 'react';
-import {animated, config, useSprings} from '@react-spring/web';
-import {clsx} from 'clsx';
-
-
+import Numbers from './components/Numbers';
+import {formatCurrency, getCompareNumber} from './utils';
 
 interface IProps {
-    className?: string
-    style?: CSS.Properties
+    className?: string;
+    style?: CSS.Properties;
     amount?: number;
     length?: number;
+    renderNumber?: (currentNumber: number|string) => React.ReactNode;
 }
 
 
-const numberTotal = 20;
-const pi = 100 / numberTotal;
 
+
+/**
+ * Jackpot
+ * @param className
+ * @param style
+ * @param amount
+ * @param length
+ * @param renderNumber
+ * @constructor
+ */
 const Jackpot = ({
+    className,
+    style,
     amount = 0,
     length = 5,
+    renderNumber,
 }: IProps) => {
-    const defaultValue = Array(length).fill('0');
-
-    const targetDigits = amount.toString().padStart(length, '0').split('');
-    const [digits, setDigits] = useState<number[]>(amount === 0 ? targetDigits: defaultValue);
-
-    const [springs, api] = useSprings(
-        digits.length,
-        (index) => {
-            const target = Number(targetDigits[index]);
-            const isRollBack = target < digits[index];
-            const toValue = isRollBack ? target + 10 : target;
-
-            return {
-                from: {transform: `translateY(-${digits[index] * pi}%)`},
-                to: {transform: `translateY(-${toValue * pi}%)`},
-                config: {...config.molasses, duration: 600 * (digits.length - index)},
-                reset: false,
-                onRest: () => {
-                    if(isRollBack){
-                        api.set((setIndex) => {
-                            if(index === setIndex){
-                                return {
-                                    transform: `translateY(-${(toValue - 10) * pi}%)`
-                                };
-                            }
-                            return {};
-                        });
-                    }
-                }
-            };
-        },
-        [amount],
-    );
+    const targetDigits = formatCurrency(amount.toString().padStart(length, '0')).split('');
+    const [digits, setDigits] = useState<string[]>(targetDigits);
 
     useEffect(() => {
-        setDigits(targetDigits.map(Number));
+        setDigits(targetDigits);
     }, [amount]);
 
+
+    /**
+     * 渲染數字（0~9循環兩次）
+     */
+    const renderMotionNumber = () => {
+        const compareNumber = getCompareNumber(digits, targetDigits);
+
+        return digits.map((digit, index) => {
+            if (digit === ',') {
+                if (renderNumber) {
+                    return <div key={index}>{renderNumber(',')}</div>;
+                }
+                return <div key={index}>,</div>;
+            }
+
+            const currentAmount = index > compareNumber[0] ? Number(digits[index]) + 10 : Number(digits[index]);
+            return <Numbers key={index} amount={currentAmount} renderNumber={renderNumber} duration={0.6 + (digits.length - index) * 0.2}/>;
+        });
+    };
+
+
     return (
-        <div className={styles.root}>
-            {springs.map((props, index) => (
-                <animated.div
-                    key={index}
-                    style={props}
-                    className={styles.motion}
-                >
-                    {[...Array(numberTotal)].map((_, i) => {
-                        const num = i >= 10 ? i - 10: i;
-                        const isActive = digits[index] === i ? 'active' : '';
-                        return (
-                            <div
-                                key={i}
-                                className={clsx(styles.num)}
-                                data-active={isActive ? '': undefined}
-                            >
-                                {num}
-                            </div>
-                        );
-                    })}
-                </animated.div>
-            ))}
+        <div className={clsx(className, styles.root)} style={style}>
+            {renderMotionNumber()}
         </div>
     );
 };

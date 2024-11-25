@@ -20,6 +20,7 @@
     "@swc/plugin-styled-components": "^1.5.68",
     "@types/dom-to-image": "^2.6.7",
     "@types/styled-components": "^5.1.26",
+    "@react-spring/web": "^9.7.2",
     "dom-to-image": "^2.6.0",
     "react": "link:../node_modules/react",
     "react-dom": "link:../node_modules/react-dom",
